@@ -13,7 +13,6 @@ import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import androidx.health.connect.client.units.Length
 import de.akdogan.simplefitnesscounter.DateHelper
-import de.akdogan.simplefitnesscounter.UserPreferences
 import de.akdogan.simplefitnesscounter.ui.overview.model.DayRecord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -48,7 +47,7 @@ class HealthConnectRepository(private val context: Context) {
             result.forEach {
                 Log.d(
                     TAG,
-                    "FINAL DATA [${it.start.format(DateTimeFormatter.ofPattern("E dd.MM"))}]: Steps = ${it.steps} -- BikedM = ${it.bikedKilometers}"
+                    "FINAL DATA [${it.start.format(DateTimeFormatter.ofPattern("E dd.MM"))}]: Steps = ${it.stepsSteps} -- BikedM = ${it.bikedKilometers}"
                 )
             }
             result
@@ -71,7 +70,7 @@ class HealthConnectRepository(private val context: Context) {
 
             DayRecord(
                 start = it.startTime,
-                steps = it.result[StepsRecord.COUNT_TOTAL]?.toInt() ?: 0,
+                stepsSteps = it.result[StepsRecord.COUNT_TOTAL]?.toInt() ?: 0,
                 bikedKilometers = bikeKm
             )
         }.reversed()

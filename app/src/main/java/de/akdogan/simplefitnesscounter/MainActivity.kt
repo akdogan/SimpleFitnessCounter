@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
@@ -19,6 +20,7 @@ import androidx.health.connect.client.records.ExerciseSessionRecord
 import androidx.health.connect.client.records.StepsRecord
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import de.akdogan.simplefitnesscounter.ui.glance.GlanceStatisticWidget
 import de.akdogan.simplefitnesscounter.ui.overview.OverViewScreen
 import de.akdogan.simplefitnesscounter.ui.overview.OverviewViewModel
 import de.akdogan.simplefitnesscounter.ui.theme.SimpleFitnessCounterTheme
@@ -66,6 +68,7 @@ class MainActivity : ComponentActivity() {
             val healthConnectClient = HealthConnectClient.getOrCreate(this)
             lifecycleScope.launch { checkPermissionsAndRun(healthConnectClient) }
         }
+        updateStatisticGlanceWidget()
     }
 
     suspend fun checkPermissionsAndRun(healthConnectClient: HealthConnectClient) {
@@ -77,6 +80,16 @@ class MainActivity : ComponentActivity() {
         } else {
             Log.d(TAG, "Health Connect permission not granted before, asking for permissions now")
             requestPermissions.launch(PERMISSIONS)
+        }
+    }
+
+    private fun updateStatisticGlanceWidget() {
+        lifecycleScope.launch {
+            val manager = GlanceAppWidgetManager(applicationContext)
+            val widgetIds = manager.getGlanceIds(GlanceStatisticWidget::class.java)
+            widgetIds.forEach {
+                GlanceStatisticWidget().update(applicationContext, it)
+            }
         }
     }
 
