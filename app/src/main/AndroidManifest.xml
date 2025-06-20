@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.health.READ_STEPS"/>
-    <uses-permission android:name="android.permission.health.READ_DISTANCE"/>
-    <uses-permission android:name="android.permission.health.READ_EXERCISE"/>
+<!--    TODO https://developer.android.com/develop/background-work/services/fgs/declare-->
+<!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
+<!--    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />-->
+<!--    <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_IN_BACKGROUND" />-->
+
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_DISTANCE" />
+    <uses-permission android:name="android.permission.health.READ_EXERCISE" />
 
     <application
         android:name=".SimpleFitnessCounterApplication"
@@ -15,8 +20,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SimpleFitnessCounter"
-        >
+        android:theme="@style/Theme.SimpleFitnessCounter">
 
         <activity
             android:name=".MainActivity"
@@ -30,24 +34,37 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PermissionsRationaleActivity"
+        <activity
+            android:name=".PermissionsRationaleActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.SimpleFitnessCounter"
-            />
+            android:theme="@style/Theme.SimpleFitnessCounter" />
 
         <activity-alias
-            android:name="ViewPermissionUsageActivity"
             android:exported="true"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
             android:targetActivity=".PermissionsRationaleActivity"
-            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            android:name=".ViewPermissionUsageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
                 <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
             </intent-filter>
         </activity-alias>
 
+        <receiver
+            android:name="de.akdogan.simplefitnesscounter.ui.glance.GlanceWidgetReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/fitness_counter_widget" />
+        </receiver>
+
     </application>
+
 
     <queries>
         <package android:name="com.google.android.apps.healthdata" />

@@ -196,7 +196,7 @@ fun ProgressInfo_Preview() {
                 records = listOf(
                     DayRecord(
                         start = LocalDateTime.of(2024, 10, 18, 0, 0),
-                        steps = 40_000,
+                        stepsSteps = 40_000,
                         bikedKilometers = 10.0
                     )
                 )
@@ -226,7 +226,7 @@ private fun StepsItemList(
             StatsCountCard(
                 title = it.start.toUiFormat(),
                 totalSteps = String.format(Locale.getDefault(), "%,d", it.totalSteps),
-                steps = String.format(Locale.getDefault(), "%,d", it.steps),
+                steps = String.format(Locale.getDefault(), "%,d", it.stepsSteps),
                 bikedKm = DecimalFormat("#.##").format(it.bikedKilometers),
             )
         }

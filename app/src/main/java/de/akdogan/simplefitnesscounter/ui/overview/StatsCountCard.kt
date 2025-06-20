@@ -24,7 +24,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.akdogan.simplefitnesscounter.toUiFormat
 import de.akdogan.simplefitnesscounter.ui.overview.model.DayRecord
 import de.akdogan.simplefitnesscounter.ui.theme.BikeColorDefault
 import de.akdogan.simplefitnesscounter.ui.theme.SimpleFitnessCounterTheme
@@ -145,12 +144,12 @@ fun StatsCountCard_Preview() {
                 .wrapContentSize()
         ) {
             val item = DayRecord(
-                start = LocalDateTime.of(2024, 10, 18, 0, 0), steps = 2034, bikedKilometers = 3.7
+                start = LocalDateTime.of(2024, 10, 18, 0, 0), stepsSteps = 2034, bikedKilometers = 3.7
             )
             StatsCountCard(
                 title = String.format(Locale.getDefault(), "%,d", item.totalSteps),
                 totalSteps = String.format(Locale.getDefault(), "%,d", item.totalSteps),
-                steps = String.format(Locale.getDefault(), "%,d", item.steps),
+                steps = String.format(Locale.getDefault(), "%,d", item.stepsSteps),
                 bikedKm = DecimalFormat("#.##").format(item.bikedKilometers),
             )
         }

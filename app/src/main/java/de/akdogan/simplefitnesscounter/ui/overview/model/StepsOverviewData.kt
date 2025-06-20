@@ -9,14 +9,23 @@ data class StepsOverviewData(
     val stepGoal: Int,
     val records: List<DayRecord>
 ) {
+    val todayRecord: DayRecord?
+        get() = records.maxByOrNull { it.start }
+
+    // bike & steps
     val stepsTotal: Int
         get() = records.sumOf { it.totalSteps }
 
+    // steps
     val actualSteps: Int
-        get() = records.sumOf { it.steps }
+        get() = records.sumOf { it.stepsSteps }
 
+    // bike
     val bikeSteps: Int
         get() = records.sumOf { it.bikedSteps }
+
+    val bikeKm: Double
+        get() = records.sumOf { it.bikedKilometers }
 
     val stepsLeft: Int
         get() {
@@ -29,12 +38,13 @@ data class StepsOverviewData(
 
 data class DayRecord(
     val start: LocalDateTime,
-    @IntRange(from = 0) val steps: Int,
+    @IntRange(from = 0) val stepsSteps: Int,
     val bikedKilometers: Double
 ) {
     val totalSteps
-        get() = (steps + bikedKilometers * UserPreferences.bikedKmInSteps).roundToInt()
+        get() = (stepsSteps + bikedKilometers * UserPreferences.bikedKmInSteps).roundToInt()
 
     val bikedSteps
         get() = (bikedKilometers * UserPreferences.bikedKmInSteps).roundToInt()
+
 }
